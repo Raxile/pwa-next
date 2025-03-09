@@ -1,43 +1,13 @@
 "use client";
-import dynamic from "next/dynamic";
-const InstallPrompt = dynamic(() => import("@/components/InstallPrompt"), {
-  ssr: false,
-});
+import InstallPrompt from "@/components/beforeinstallprompt";
+import DebugConsole from "@/components/DebugConsole";
+// import dynamic from "next/dynamic";
+// const InstallPrompt = dynamic(() => import("@/components/InstallPrompt"), {
+//   ssr: false,
+// });
 import Image from "next/image";
-import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [deferredPrompt, setDeferredPrompt] = useState(null);
-
-  useEffect(() => {
-    const handleBeforeInstallPrompt = (event) => {
-      console.log("🔥 beforeinstallprompt fired!");
-      event.preventDefault(); // Prevent default behavior
-      setDeferredPrompt(event); // Store event for later
-
-      // 🔥 Automatically show the install prompt
-      setTimeout(() => {
-        event.prompt(); // Open install prompt automatically
-        event.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === "accepted") {
-            console.log("✅ User accepted the install");
-          } else {
-            console.log("❌ User dismissed the install");
-          }
-          setDeferredPrompt(null); // Reset
-        });
-      }, 2000); // Delay to ensure UI loads
-    };
-
-    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-
-    return () => {
-      window.removeEventListener(
-        "beforeinstallprompt",
-        handleBeforeInstallPrompt
-      );
-    };
-  }, []);
   return (
     <>
       <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -136,6 +106,8 @@ export default function Home() {
         </footer>
       </div>
       {/* <InstallPrompt /> */}
+      <DebugConsole />
+      <InstallPrompt />
     </>
   );
 }
