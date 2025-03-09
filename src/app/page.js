@@ -4,15 +4,15 @@ const InstallPrompt = dynamic(() => import("@/components/InstallPrompt"), {
   ssr: false,
 });
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  const deferredPrompt = useRef(null);
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (event) => {
       event.preventDefault(); // Prevent automatic prompt
-      deferredPrompt.current = event; // Save event for later
+      setDeferredPrompt(event); // Save event for later
 
       // Auto-trigger install prompt after 3 seconds
       setTimeout(() => {
