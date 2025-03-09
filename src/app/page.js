@@ -4,6 +4,7 @@ const InstallPrompt = dynamic(() => import("@/components/InstallPrompt"), {
   ssr: false,
 });
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
