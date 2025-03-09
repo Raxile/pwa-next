@@ -22,6 +22,12 @@ const InstallPrompt = () => {
     };
   }, []);
 
+  useEffect(() => {
+    window.addEventListener("beforeinstallprompt", (event) => {
+      console.log("🔥 beforeinstallprompt event fired!");
+    });
+  }, []);
+
   const handleInstallClick = () => {
     if (deferredPrompt) {
       deferredPrompt.prompt(); // Show install prompt
