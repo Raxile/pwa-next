@@ -4,20 +4,28 @@ const InstallPrompt = dynamic(() => import("@/components/InstallPrompt"), {
   ssr: false,
 });
 import Image from "next/image";
-import { useEffect, useState } from "react";
 
 export default function Home() {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (event) => {
-      event.preventDefault(); // Prevent automatic prompt
-      setDeferredPrompt(event); // Save event for later
+      console.log("🔥 beforeinstallprompt fired!");
+      event.preventDefault(); // Prevent default behavior
+      setDeferredPrompt(event); // Store event for later
 
-      // Auto-trigger install prompt after 3 seconds
+      // 🔥 Automatically show the install prompt
       setTimeout(() => {
-        event.prompt();
-      }, 3000);
+        event.prompt(); // Open install prompt automatically
+        event.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === "accepted") {
+            console.log("✅ User accepted the install");
+          } else {
+            console.log("❌ User dismissed the install");
+          }
+          setDeferredPrompt(null); // Reset
+        });
+      }, 2000); // Delay to ensure UI loads
     };
 
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
