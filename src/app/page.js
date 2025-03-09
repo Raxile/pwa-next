@@ -4,8 +4,31 @@ const InstallPrompt = dynamic(() => import("@/components/InstallPrompt"), {
   ssr: false,
 });
 import Image from "next/image";
+import { useEffect, useRef } from "react";
 
 export default function Home() {
+  const deferredPrompt = useRef(null);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (event) => {
+      event.preventDefault(); // Prevent automatic prompt
+      deferredPrompt.current = event; // Save event for later
+
+      // Auto-trigger install prompt after 3 seconds
+      setTimeout(() => {
+        event.prompt();
+      }, 3000);
+    };
+
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt
+      );
+    };
+  }, []);
   return (
     <>
       <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -103,7 +126,7 @@ export default function Home() {
           </a>
         </footer>
       </div>
-      <InstallPrompt />
+      {/* <InstallPrompt /> */}
     </>
   );
 }
