@@ -1,24 +1,19 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const InstallPrompt = () => {
   useEffect(() => {
     const handleBeforeInstallPrompt = (event) => {
-      console.log("🔥 beforeinstallprompt fired!", event);
-      event.preventDefault(); // Prevent default behavior
+      console.log("call handleBeforeInstallPrompt");
+      event.prompt(); // Automatically show install prompt
 
-      // Auto-show install prompt after 2 seconds
-      setTimeout(() => {
-        console.log("🚀 Trying to open install prompt...");
-        event.prompt();
-        event.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === "accepted") {
-            console.log("✅ User accepted the install");
-          } else {
-            console.log("❌ User dismissed the install");
-          }
-        });
-      }, 2000);
+      event.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === "accepted") {
+          console.log("User accepted the install");
+        } else {
+          console.log("User dismissed the install");
+        }
+      });
     };
 
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
@@ -31,7 +26,7 @@ const InstallPrompt = () => {
     };
   }, []);
 
-  return null;
+  return null; // No need for a button since prompt opens automatically
 };
 
 export default InstallPrompt;
