@@ -1,10 +1,9 @@
 "use client";
-import InstallPrompt from "@/components/beforeinstallprompt";
 import DebugConsole from "@/components/DebugConsole";
-// import dynamic from "next/dynamic";
-// const InstallPrompt = dynamic(() => import("@/components/InstallPrompt"), {
-//   ssr: false,
-// });
+import dynamic from "next/dynamic";
+const InstallPrompt = dynamic(() => import("@/components/InstallPrompt"), {
+  ssr: false,
+});
 import Image from "next/image";
 
 export default function Home() {
@@ -105,9 +104,9 @@ export default function Home() {
           </a>
         </footer>
       </div>
-      {/* <InstallPrompt /> */}
-      <DebugConsole />
       <InstallPrompt />
+      <DebugConsole />
+      {/* <InstallPrompt /> */}
     </>
   );
 }
