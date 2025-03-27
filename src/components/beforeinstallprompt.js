@@ -47,9 +47,9 @@ const InstallPrompt = () => {
         <div
           style={{
             position: "fixed",
-            top: "20px",
-            left: "20px",
-            background: "lightgray",
+            bottom: "20px",
+            right: "20px",
+            background: "black",
             padding: "10px",
             borderRadius: "5px",
             display: "flex",
