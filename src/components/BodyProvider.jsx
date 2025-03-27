@@ -99,13 +99,14 @@ const BodyProvider = ({ children, className }) => {
         <FullScreenContext.Provider value={{ fullscreen, toggleFullscreen }}>
           {children}
           <button
+            className="p-5 bg-red-900 text-white"
             onClick={() => {
               toggleFullscreen(fullscreen);
             }}
           >
             Full Screen
           </button>
-          <p>fullscreen:{fullscreen}</p>
+          <p>fullscreen:{fullscreen ? "true" : "false"}</p>
         </FullScreenContext.Provider>
       </div>
       <InstallPrompt />
